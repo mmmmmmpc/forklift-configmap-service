@@ -31,7 +31,7 @@
 set -o pipefail
 
 CONFIGMAP_DIR=/srv/configmap
-CONFIGMAP_DEVICE=$(lsblk -o NAME,FSTYPE -l | grep iso | head -n 1)
+CONFIGMAP_DEVICE=$(lsblk -o NAME,FSTYPE -l | grep iso9660 | head -n 1)
 CONF_DIR=/etc/configmap-service
 LOGS_DIR=/var/log
 LOG_FILE=${LOGS_DIR}/$(basename $0).$(date +%Y%m%d_%H%M%S).log
