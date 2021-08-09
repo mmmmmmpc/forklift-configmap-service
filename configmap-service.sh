@@ -31,7 +31,7 @@
 set -o pipefail
 
 CONFIGMAP_DIR=/srv/configmap
-CONFIGMAP_DEVICE=$(lsblk -o NAME,FSTYPE -l | grep iso9660 | head -n 1)
+CONFIGMAP_DEVICE=$(lsblk -o NAME,FSTYPE -l | grep iso9660 | head -n 1 | awk '{print $1}')
 CONF_DIR=/etc/configmap-service
 LOGS_DIR=/var/log
 LOG_FILE=${LOGS_DIR}/$(basename $0).$(date +%Y%m%d_%H%M%S).log
@@ -61,6 +61,7 @@ if [ ! ${CONFIGMAP_DEVICE} ]; then
     echo_log "The ${CONFIGMAP_DEVICE} device to mount ConfigMap does not exist, exiting"
 fi
 
+echo_log "Mounting ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}"
 # Execution of the ConfigMap mount
 mount -t iso9660 ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}
 
