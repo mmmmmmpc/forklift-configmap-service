@@ -16,6 +16,7 @@
 ###       1: Error found
 ###       10: Script not run as Root
 ###       11: Usage displayed
+###       12: ConfigMap mount dir doesn't exist
 ###
 ###    NOTES
 ###
@@ -30,60 +31,74 @@
 set -o pipefail
 
 CONFIGMAP_DIR=/srv/configmap
+CONFIGMAP_DEVICE=$(lsblk -o NAME,FSTYPE -l | grep iso | head -n 1)
 CONF_DIR=/etc/configmap-service
 LOGS_DIR=/var/log
 LOG_FILE=${LOGS_DIR}/$(basename $0).$(date +%Y%m%d_%H%M%S).log
 
 source ${CONF_DIR}/config
 
-usage(){
+function usage{
     echo "Usage: $(basename $0) "
     echo "This script finds ConfigMaps attached to the system."
-    echo "Mount ConfigMaps in $CONFIGMAP_DIR, and executes *.sh files in it."
+    echo "Mount ConfigMaps in ${CONFIGMAP_DIR}, and executes *.sh files in it."
     echo "This script must be executed by root user"
 }
 
+function echo_log{
+    echo "$1"
+    echo -e "$(date) $1" >> ${LOG_FILE}
+}
 
-mount_configmap(){
-    
+function mount_configmap{
+if [! -d ${CONFIGMAP_DIR}]; then
+    echo_log "The ${CONFIGMAP_DIR} directory to mount ConfigMap does not exist, exiting"
+    exit 12
+fi
+if [! ${CONFIGMAP_DEVICE}]; then
+    echo_log "The ${CONFIGMAP_DEVICE} device to mount ConfigMap does not exist, exiting"
+fi
+
+# Execution of the ConfigMap mount
+mount -t iso9660 ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}
+
+if [$? -ne 0 ]; then {
+    RC=$?
+    echo_log "Error while mounting ${CONFIGMAP_DEVICE} on ${CONFIGMAP_DIR}"
 }
 
 run_configmap(){
 
 }
 
-if [ $# -ne 0 ] 
-then
+if [ $# -ne 0 ]; then
 	usage
     exit 11
 fi
 
 
-
-if [ $(whoami) != "root" ]
-then
-        echo "This script must be executed by root user"
-        trace_log_end 1 $@
+if [ $(whoami) != "root" ]; then
+    echo_log "The $(basename) script must be executed by root user" 
         exit 10
 fi
 
 RC=0
 
-echo -e "$(date) Mounting ConfigMap devices ... Logs can be found in $LOG_FILE" |tee -a $LOG_FILE
-echo -e "============================================================================================\n"|tee -a $LOG_FILE
+echo_log "$(date) Mounting ConfigMap devices ... Logs can be found in ${LOG_FILE}"
+echo_log "============================================================================================\n"
 mount_configmap
 
-echo -e "$(date) Starting ConfigMap scripts ... Logs can be found in $LOG_FILE" |tee -a $LOG_FILE
-echo -e "============================================================================================\n"|tee -a $LOG_FILE
+echo_log "$(date) Starting ConfigMap scripts ... Logs can be found in ${LOG_FILE}"
+echo_log "============================================================================================\n"
 run_configmap
 
 if [ $RC -ne 0 ]
 then
-	echo -e "ERROR: ConfigMap service failed to start. Logs can be found in $LOG_FILE" |tee -a $LOG_FILE
-	echo -e "============================================================================================\n"|tee -a $LOG_FILE
+	echo_log "ERROR: ConfigMap service failed to start. Logs can be found in ${LOG_FILE}"
+	echo_log "============================================================================================\n"
 else
-	echo -e "ConfigMap service started successfully. Logs can be found in $LOG_FILE" |tee -a $LOG_FILE
-	echo -e "============================================================================================\n"|tee -a $LOG_FILE
+	echo_log "ConfigMap service started successfully. Logs can be found in ${LOG_FILE}"
+	echo_log "============================================================================================\n"
 fi
 
 exit $RC
