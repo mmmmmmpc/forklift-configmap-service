@@ -36,10 +36,12 @@ CONF_DIR=/etc/configmap-service
 LOGS_DIR=/var/log
 LOG_FILE=${LOGS_DIR}/$(basename $0).$(date +%Y%m%d_%H%M%S).log
 
-source ${CONF_DIR}/config
+if [ -r ${CONF_DIR}/config ]; then
+    source ${CONF_DIR}/config
+fi
 
 function usage{
-    echo "Usage: $(basename $0) "
+    echo "Usage: configmap-service.sh"
     echo "This script finds ConfigMaps attached to the system."
     echo "Mount ConfigMaps in ${CONFIGMAP_DIR}, and executes *.sh files in it."
     echo "This script must be executed by root user"
