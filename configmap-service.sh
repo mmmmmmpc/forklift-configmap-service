@@ -40,19 +40,19 @@ if [ -r ${CONF_DIR}/config ]; then
     source ${CONF_DIR}/config
 fi
 
-function usage{
+function usage {
     echo "Usage: configmap-service.sh"
     echo "This script finds ConfigMaps attached to the system."
     echo "Mount ConfigMaps in ${CONFIGMAP_DIR}, and executes *.sh files in it."
     echo "This script must be executed by root user"
 }
 
-function echo_log{
+function echo_log {
     echo "$1"
     echo -e "$(date) $1" >> ${LOG_FILE}
 }
 
-function mount_configmap{
+function mount_configmap {
 if [! -d ${CONFIGMAP_DIR}]; then
     echo_log "The ${CONFIGMAP_DIR} directory to mount ConfigMap does not exist, exiting"
     exit 12
@@ -64,13 +64,14 @@ fi
 # Execution of the ConfigMap mount
 mount -t iso9660 ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}
 
-if [$? -ne 0 ]; then {
+if [$? -ne 0 ]; then 
     RC=$?
     echo_log "Error while mounting ${CONFIGMAP_DEVICE} on ${CONFIGMAP_DIR}"
+fi
 }
 
-run_configmap(){
-
+function run_configmap {
+    echo "Run configmap"
 }
 
 if [ $# -ne 0 ]; then
@@ -94,8 +95,7 @@ echo_log "$(date) Starting ConfigMap scripts ... Logs can be found in ${LOG_FILE
 echo_log "============================================================================================\n"
 run_configmap
 
-if [ $RC -ne 0 ]
-then
+if [ $RC -ne 0 ]; then
 	echo_log "ERROR: ConfigMap service failed to start. Logs can be found in ${LOG_FILE}"
 	echo_log "============================================================================================\n"
 else
