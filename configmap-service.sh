@@ -61,9 +61,9 @@ if [ ! ${CONFIGMAP_DEVICE} ]; then
     echo_log "The ${CONFIGMAP_DEVICE} device to mount ConfigMap does not exist, exiting"
 fi
 
-echo_log "Mounting ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}"
+echo_log "Mounting /dev/${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}"
 # Execution of the ConfigMap mount
-mount -t iso9660 ${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}
+mount -t iso9660 /dev/${CONFIGMAP_DEVICE} ${CONFIGMAP_DIR}
 
 if [ $? -ne 0 ]; then 
     RC=$?
