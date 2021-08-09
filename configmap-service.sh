@@ -53,11 +53,11 @@ function echo_log {
 }
 
 function mount_configmap {
-if [! -d ${CONFIGMAP_DIR}]; then
+if [ ! -d ${CONFIGMAP_DIR}]; then
     echo_log "The ${CONFIGMAP_DIR} directory to mount ConfigMap does not exist, exiting"
     exit 12
 fi
-if [! ${CONFIGMAP_DEVICE}]; then
+if [ ! ${CONFIGMAP_DEVICE}]; then
     echo_log "The ${CONFIGMAP_DEVICE} device to mount ConfigMap does not exist, exiting"
 fi
 
