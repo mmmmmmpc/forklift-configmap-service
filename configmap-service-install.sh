@@ -13,6 +13,7 @@
 ###    RETURNS
 ###       0: OK
 ###       1: Error found
+###       2: Install path not a dir
 ###
 ###    NOTES
 ###
@@ -27,7 +28,7 @@ LOGS_DIR=/var/log
 LOG_FILE=${LOGS_DIR}/$(basename $0).$(date +%Y%m%d_%H%M%S).log
 
 function usage {
-    echo "Usage: configmap-service-install.sh"
+    echo "Usage: configmap-service-install.sh [<install_path>|--help]"
     echo "This script installs configmap-service in the system."
     echo "This script must be executed by root user"
 }
@@ -37,11 +38,21 @@ function echo_log {
     echo -e "$(date) $1" >> ${LOG_FILE}
 }
 
-if [ "$1" = "--help" ]; then
-	usage
-    exit 0
+if [ $# -ne 0 ]; then
+    if [ "$1" = "--help" ]; then
+    	usage
+        exit 0
+    else
+        INSTALL_PATH=$1
+        if [ ! -d ${INSTALL_PATH} ]
+            echo_log "Install path not an existing directory. Exiting"
+            exit 2
+        fi
+    fi
+else
+    echo_log "No install path provided, using defaults" 
+    INSTALL_PATH=""
 fi
-
 
 if [ $(whoami) != "root" ]; then
     echo_log "The $(basename) script must be executed by root user" 
@@ -51,9 +62,9 @@ fi
 echo_log "$(date) Copying files ... Logs can be found in ${LOG_FILE}"
 echo_log "============================================================================================\n"
 
-cp ./configmap-service.sh  /usr/sbin/configmap-service.sh
-chmod 755 /usr/sbin/configmap-service.sh
-cp ./configmap.service /etc/systemd/system/configmap.service
-chmod 644 /etc/systemd/system/configmap.service
-systemctl daemon-reload
+/usr/bin/cp -vf ./configmap-service.sh ${INSTALL_PATH}/usr/sbin/configmap-service.sh | tee ${LOG_FILE}
+/usr/bin/chmod -v 755 ${INSTALL_PATH}/usr/sbin/configmap-service.sh | tee ${LOG_FILE}
+/usr/bin/cp -vf ./configmap.service ${INSTALL_PATH}/etc/systemd/system/configmap.service | tee ${LOG_FILE}
+/usr/bin/chmod -v 644 /etc/systemd/system/configmap.service | tee ${LOG_FILE}
+/usr/bin/systemctl daemon-reload
 
