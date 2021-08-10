@@ -62,7 +62,7 @@ fi
 echo_log "$(date) Copying files ... Logs can be found in ${LOG_FILE}"
 echo_log "============================================================================================\n"
 
-for REQUIRED_DIRS in "/usr/sbin/ /etc/systemd/system/"; do
+for REQUIRED_DIRS in "${INSTALL_PATH}/usr/sbin/ ${INSTALL_PATH}/etc/systemd/system/"; do
    if [ ! -d "${REQUIRED_DIRS}" ]; then
       mkdir -v -p ${REQUIRED_DIRS} | tee ${LOG_FILE}
    fi 
