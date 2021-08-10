@@ -44,7 +44,7 @@ if [ $# -ne 0 ]; then
         exit 0
     else
         INSTALL_PATH=$1
-        if [ ! -d ${INSTALL_PATH} ]
+        if [ ! -d ${INSTALL_PATH} ]; then
             echo_log "Install path not an existing directory. Exiting"
             exit 2
         fi
