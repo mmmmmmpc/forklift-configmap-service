@@ -72,5 +72,8 @@ done
 /usr/bin/chmod -v 755 ${INSTALL_PATH}/usr/sbin/configmap-service.sh | tee ${LOG_FILE}
 /usr/bin/cp -vf ./configmap.service ${INSTALL_PATH}/etc/systemd/system/configmap.service | tee ${LOG_FILE}
 /usr/bin/chmod -v 644 /etc/systemd/system/configmap.service | tee ${LOG_FILE}
-/usr/bin/systemctl daemon-reload
 
+if [ $# -eq 0 ]; then
+    /usr/bin/systemctl daemon-reload
+    /usr/bin/systemctl enable configmap
+fi
