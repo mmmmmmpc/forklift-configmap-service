@@ -17,7 +17,7 @@ Requires:       java, redhat-lsb
 %global __os_install_post /usr/lib/rpm/brp-compress %{nil}
 
 %description
-Konveyor Flink ConfigMap Service. It enables VMs running on Kubernetes / KubeVirt to execute in them scripts provided as ConfigMaps after the main service has been started (i.e. OracleDB or PostgreSQL).
+Konveyor Forklift ConfigMap Service. It enables VMs running on Kubernetes / KubeVirt to execute in them scripts provided as ConfigMaps after the main service has been started (i.e. OracleDB or PostgreSQL).
 
 %prep
 cp -av %{SOURCE0} .
@@ -40,7 +40,7 @@ install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_bindir}/
 %systemd_preun configmap.service
 
 %postun
-%systemd_postun
+%systemd_postun configmap.service
 
 %files
 %defattr(-,root,root,600)

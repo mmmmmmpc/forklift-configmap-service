@@ -1,6 +1,8 @@
 [Unit]
 Description=ConfigMap Service
 # Please set the value for 'After' to the main service in your VM, like PostgreSQL or OracleDB
+#After=oracle-xe.service
+#After=postgresql.service
 #After=network.target
 
 [Service]
