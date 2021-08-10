@@ -62,6 +62,12 @@ fi
 echo_log "$(date) Copying files ... Logs can be found in ${LOG_FILE}"
 echo_log "============================================================================================\n"
 
+for REQUIRED_DIRS in '/usr/sbin/ /etc/systemd/system/'; do
+   if [ ! -d ${REQUIRED_DIRS} ]; then
+      mkdir -v -p ${REQUIRED_DIRS} | tee ${LOG_FILE}
+   fi 
+done
+
 /usr/bin/cp -vf ./configmap-service.sh ${INSTALL_PATH}/usr/sbin/configmap-service.sh | tee ${LOG_FILE}
 /usr/bin/chmod -v 755 ${INSTALL_PATH}/usr/sbin/configmap-service.sh | tee ${LOG_FILE}
 /usr/bin/cp -vf ./configmap.service ${INSTALL_PATH}/etc/systemd/system/configmap.service | tee ${LOG_FILE}
