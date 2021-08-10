@@ -7,4 +7,4 @@ data:
   oracledb_initialize_map.sh: |-
     #!/bin/bash
     echo "Starting Database Automated Init"
-    touch /tmp/$(+%Y%m%d_%H%M%S_oracledb.touch)
+    touch /tmp/$(date +%Y%m%d_%H%M%S_oracledb.touch)
