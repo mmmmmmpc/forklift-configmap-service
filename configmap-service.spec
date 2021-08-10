@@ -1,6 +1,6 @@
 Name:           configmap-service
 Version:        0.0.1
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Konveyor Forklift ConfigMap Service.
 
 License:        ASL 2.0
@@ -9,7 +9,7 @@ Source0:        configmap-service.sh
 Source1:        configmap.service
 
 BuildRequires:  systemd
-Requires:       java, redhat-lsb
+Requires:       bash
 
 # disable debug packages and the stripping of the binaries
 %global _enable_debug_package 0
@@ -31,7 +31,6 @@ install -p -m 644 configmap.service $RPM_BUILD_ROOT%{_unitdir}/
 install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_bindir}/
 
 %pre
-%systemd_pre 
 
 %post
 %systemd_post configmap.service
@@ -49,5 +48,11 @@ install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_bindir}/
 %attr(755,root,root) %{_bindir}/configmap-service.sh
 
 %changelog
-* Tue Jun 10 2021 Miguel Perez Colino <mperez@redhat.com> release 1
+* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 1
 - Initial RPM
+
+* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 2
+- Fixed dependencies
+
+* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 3
+- Fixed pre install script
