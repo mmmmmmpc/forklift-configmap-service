@@ -72,7 +72,11 @@ fi
 }
 
 function run_configmap {
-    echo "Run configmap"
+    echo_log "Running ConfigMap Scripts on ${CONFIGMAP_DIR}"
+    for CONFIGMAP_SCRIPT in $(ls ${CONFIGMAP_DIR}/*.sh); do
+        echo_log "Running ConfigMap Script ${CONFIGMAP_SCRIPT}"
+        /bin/bash ${CONFIGMAP_SCRIPT}
+    done
 }
 
 if [ $# -ne 0 ]; then

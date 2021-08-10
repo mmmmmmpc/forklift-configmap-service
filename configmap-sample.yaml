@@ -4,10 +4,7 @@ metadata:
   name: oracledb
   namespace: mtv-miguel
 data:
-  oracledb.property.1: hello
-  oracledb.property.2: world
-  oracledb.property.file: |-
-    property.1=value-1
-    property.2=value-2
-    property.3=value-3
-
+  oracledb_initialize_map.sh: |-
+    #!/bin/bash
+    echo "Starting Database Automated Init"
+    touch /tmp/$(+%Y%m%d_%H%M%S_oracledb.touch)
