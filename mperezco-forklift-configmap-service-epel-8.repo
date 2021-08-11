@@ -1,0 +1,10 @@
+[copr:copr.fedorainfracloud.org:mperezco:forklift-configmap-service]
+name=Copr repo for forklift-configmap-service owned by mperezco
+baseurl=https://download.copr.fedorainfracloud.org/results/mperezco/forklift-configmap-service/epel-8-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/mperezco/forklift-configmap-service/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
