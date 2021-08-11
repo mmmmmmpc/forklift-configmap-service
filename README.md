@@ -16,7 +16,7 @@ In case you want to package it and install it somewhere else, you can pass a tar
 Then it will just copy the files to the target folders, recreating the relative paths. (Useful for packaging)
 
 ## Installation in Red Hat Enterprise Linux 8 (RHEL8)
-To install the service in different RPM based distros, there is a (Forkift ConfigMap Service Repo)[https://copr.fedorainfracloud.org/coprs/mperezco/forklift-configmap-service/] Avalable. To make things easy a repo file is provided for RHEL8 users `mperezco-forklift-configmap-service-epel-8.repo`. To use it follow these steps:
+To install the service in different RPM based distros, there is a [Forkift ConfigMap Service Repo](https://copr.fedorainfracloud.org/coprs/mperezco/forklift-configmap-service/) Available. To make things easy a repo file is provided for RHEL8 users `mperezco-forklift-configmap-service-epel-8.repo`. To use it follow these steps:
 
     cp mperezco-forklift-configmap-service-epel-8.repo /etc/yum.repos.d/
     yum install configmap-service -y
@@ -43,7 +43,7 @@ The apply changes:
 
     systemctl daemon-reload
 
-More info in the (official documentation for RHEL8)[https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd#sect-Managing_Services_with_systemd-Unit_File_Modify]
+More info in the [official documentation for RHEL8](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd#sect-Managing_Services_with_systemd-Unit_File_Modify)
 
 This way, the service will run once the database is active and we can perform actions such as preload data to it from our ConfigMap, Label it as DEV/TEST/PROD or even change the database schema.
 
