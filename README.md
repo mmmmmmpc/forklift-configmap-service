@@ -34,15 +34,16 @@ To install the service in different RPM based distros, there is a (Forkift Confi
 The `configmap-service` is intended to be run after the main service in the VM is running (i.e. a Database) so it can apply changes to it.
 A default configuration is provided and deployed to `/etc/systemd/system/configmap.service` in command line installations and to `/var/lib/systemd/system/configmap.service` in RPM based installations.
 
-To customize the starting up of the service, we shall edit `/etc/systemd/system/configmap.service`, which for RPM based installations means copying the file under `/var/lib/systemd` there and then editing it.
+To customize the starting up of the service, we shall create the directory `/etc/systemd/system/configmap.service.d/`, and then create the file postgresql.conf with the following content:
 
-The parameter to be changed is `After` under `[Unit]`. The default is set to run after `network.target`:
-
-    After=network.target
-
-In case we are running a PostgreSQL service we may change that line to:
-
+    [Unit]
     After=postgresql.service
+
+The apply changes:
+
+    systemctl daemon-reload
+
+More info in the (official documentation for RHEL8)[https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd#sect-Managing_Services_with_systemd-Unit_File_Modify]
 
 This way, the service will run once the database is active and we can perform actions such as preload data to it from our ConfigMap, Label it as DEV/TEST/PROD or even change the database schema.
 
