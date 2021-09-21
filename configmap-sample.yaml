@@ -13,7 +13,7 @@ data:
     echo "Changing Oracle Connections
     su - oracle -c 'sqlplus -s "/ as sysdba" @/srv/configmap/change_oracle_connections.sql'
   show_oracle_connections.sql: |-
-    select value from v\$parameter where name = 'processes';
+    select value from v$parameter where name = 'processes';
     exit
   change_oracle_connections.sql: |-
     alter system set processes=250 scope=spfile;
