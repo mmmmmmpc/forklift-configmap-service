@@ -8,3 +8,17 @@ data:
     #!/bin/bash
     echo "Starting Database Automated Init"
     touch /tmp/$(date +%Y%m%d_%H%M%S_oracledb.touch)
+    echo "Showing Oracle Connections"
+    su - oracle -c 'sqlplus -s "/ as sysdba" @/srv/configmap/show_oracle_connections.sql'
+    echo "Changing Oracle Connections
+    su - oracle -c 'sqlplus -s "/ as sysdba" @/srv/configmap/change_oracle_connections.sql'
+  show_oracle_connections.sql: |-
+    select value from v\$parameter where name = 'processes';
+    exit
+  change_oracle_connections.sql: |-
+    alter system set processes=250 scope=spfile;
+    shutdown immediate
+    startup
+    exit
+
+

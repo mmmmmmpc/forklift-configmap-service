@@ -1,6 +1,6 @@
 Name:           configmap-service
 Version:        0.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Konveyor Forklift ConfigMap Service.
 
 License:        ASL 2.0
@@ -25,10 +25,10 @@ cp -av %{SOURCE1} .
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p -m 755 $RPM_BUILD_ROOT%{_bindir}
+mkdir -p -m 755 $RPM_BUILD_ROOT%{_sbindir}
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
 install -p -m 644 configmap.service $RPM_BUILD_ROOT%{_unitdir}/
-install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_bindir}/
+install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_sbindir}/
 
 %pre
 
@@ -45,14 +45,17 @@ install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_bindir}/
 %defattr(-,root,root,600)
 
 %attr(644,root,root) %{_unitdir}/configmap.service
-%attr(755,root,root) %{_bindir}/configmap-service.sh
+%attr(755,root,root) %{_sbindir}/configmap-service.sh
 
 %changelog
-* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 1
-- Initial RPM
+* Fri Sep 17 2021 Miguel Perez Colino <mperez@redhat.com> release 4
+- Fixed installation path
+
+* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 3
+- Fixed pre install script
 
 * Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 2
 - Fixed dependencies
 
-* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 3
-- Fixed pre install script
+* Tue Aug 10 2021 Miguel Perez Colino <mperez@redhat.com> release 1
+- Initial RPM
