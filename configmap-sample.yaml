@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oracledb
-  namespace: mtv-miguel
+  namespace: globex-retail
 data:
   oracledb_initialize_map.sh: |-
     #!/bin/bash
