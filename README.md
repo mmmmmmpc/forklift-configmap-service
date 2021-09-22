@@ -21,6 +21,10 @@ To install the service in different RPM based distros, there is a [Forkift Confi
     cp mperezco-forklift-configmap-service-epel-8.repo /etc/yum.repos.d/
     yum install configmap-service -y
 
+... or 
+
+    dnf copr enable mperezco/forklift-configmap-service
+    dnf install configmap-service -y
 
 ## Manual Instalation
 
