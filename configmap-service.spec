@@ -27,6 +27,7 @@ cp -av %{SOURCE1} .
 rm -rf $RPM_BUILD_ROOT
 mkdir -p -m 755 $RPM_BUILD_ROOT%{_sbindir}
 mkdir -p $RPM_BUILD_ROOT%{_unitdir}
+mkdir -p $RPM_BUILD_ROOT/srv/configmap
 install -p -m 644 configmap.service $RPM_BUILD_ROOT%{_unitdir}/
 install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_sbindir}/
 
@@ -46,7 +47,7 @@ install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_sbindir}/
 
 %attr(644,root,root) %{_unitdir}/configmap.service
 %attr(755,root,root) %{_sbindir}/configmap-service.sh
-%dir(755,root,root) /srv/configmap
+%dir /srv/configmap
 
 %changelog
 * Wed Sep 22 2021 Miguel Perez Colino <mperez@redhat.com> release 5
