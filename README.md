@@ -1,5 +1,5 @@
 # forklift-configmap-service
-Systemd service to run in VMs on KubeVirt to mount ConfigMaps
+Systemd service to run in VMs on KubeVirt to mount ConfigMaps and execute automation steps included in them.
 
 ## Installation
 The script `configmap-service-install.sh` can be used to install `configmap-service`.
