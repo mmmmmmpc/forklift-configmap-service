@@ -1,6 +1,6 @@
 Name:           configmap-service
 Version:        0.0.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Konveyor Forklift ConfigMap Service.
 
 License:        ASL 2.0
@@ -46,8 +46,12 @@ install -p -m 755 configmap-service.sh $RPM_BUILD_ROOT%{_sbindir}/
 
 %attr(644,root,root) %{_unitdir}/configmap.service
 %attr(755,root,root) %{_sbindir}/configmap-service.sh
+%dir(755,root,root) /srv/configmap
 
 %changelog
+* Wed Sep 22 2021 Miguel Perez Colino <mperez@redhat.com> release 5
+- Added dir to mount ConfigMaps
+
 * Fri Sep 17 2021 Miguel Perez Colino <mperez@redhat.com> release 4
 - Fixed installation path
 
